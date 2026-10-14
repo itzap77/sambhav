@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sambhav's Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo">Sambhav's Store</div>
+        <div class="cart-icon" onclick="toggleCart()">
+            🛒 Cart <span class="cart-badge" id="cart-count">0</span>
+        </div>
+    </header>
+
+    <div class="hero">
+        <h1>Next-Gen Tech & Gear</h1>
+        <p>Premium quality products for developers and gamers.</p>
+    </div>
+
+    <div class="container">
+        <div id="product-list"></div>
+    </div>
+
+    <div id="cart-sidebar">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <div class="close-btn" onclick="toggleCart()">&times;</div>
+        </div>
+        <div class="cart-items" id="cart-contents"></div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total">₹0</span>
+            </div>
+            <!-- Changed function call here -->
+            <button class="checkout-btn" onclick="openCheckoutModal()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- NEW: Secure Checkout Modal -->
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeCheckout()">&times;</span>
+            <h2>Secure Checkout</h2>
+            <form id="payment-form" onsubmit="processPayment(event)">
+                <div class="form-group">
+                    <label>Cardholder Name</label>
+                    <input type="text" id="card-name" required placeholder="Sambhav Shilimkar">
+                </div>
+                <div class="form-group">
+                    <label>Card Number</label>
+                    <!-- Enforces 16 digits -->
+                    <input type="text" id="card-number" required pattern="\d{16}" placeholder="1234 5678 9101 1121" title="Please enter a 16-digit card number">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Expiry (MM/YY)</label>
+                        <input type="text" id="card-exp" required pattern="(0[1-9]|1[0-2])\/\d{2}" placeholder="12/28" title="Format: MM/YY">
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="text" id="card-cvv" required pattern="\d{3,4}" placeholder="123" title="3 or 4 digit CVV">
+                    </div>
+                </div>
+                <button type="submit" class="pay-btn">Pay Now <span id="pay-amount"></span></button>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast">Item added to cart!</div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
